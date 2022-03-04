@@ -42,33 +42,7 @@ class _App extends State<App> {
           onPressed: getImage,
           child: Icon(Icons.add),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: Text('Available images...'),
-                      padding: EdgeInsets.only(left: 10),
-                    ),
-                  ),
-                ],
-              ),
-              flex: 1,
-            ),
-            Expanded(
-              child: _images.length == 0
-                  ? const Text('Nothing as well')
-                  : ImageWidget(_images),
-              flex: 8,
-            ),
-          ],
-        ),
+        body: ImageWidget(_images),
       ),
     );
   }

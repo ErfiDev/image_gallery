@@ -12,8 +12,8 @@ class ImageWidget extends StatelessWidget {
       itemCount: images.length,
       itemBuilder: (ctx, int i) {
         return Container(
-          width: 250,
-          height: 150,
+          width: 150,
+          height: 100,
           child: Image(
             image: NetworkImage(images[i].url!),
           ),
