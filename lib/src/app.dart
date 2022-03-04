@@ -1,4 +1,10 @@
 import "package:flutter/material.dart";
+import 'package:http/http.dart' show get;
+import 'dart:convert';
+
+import 'package:image_gallery/src/models/image.dart';
+import 'package:image_gallery/src/widgets/image.dart';
+// import 'package:image_gallery/src/widgets/image.dart';
 
 class App extends StatefulWidget {
   @override
@@ -6,7 +12,22 @@ class App extends StatefulWidget {
 }
 
 class _App extends State<App> {
-  List<Widget> _images = [];
+  final List<ImageModel> _images = [];
+  int _counter = 1;
+
+  void getImage() async {
+    var url =
+        Uri.parse('https://jsonplaceholder.typicode.com/photos/$_counter');
+    var data = await get(url);
+
+    // converting to json
+    var toJson = json.decode(data.body);
+    var imgModel = ImageModel.fromJson(toJson);
+    setState(() {
+      _counter++;
+      _images.add(imgModel);
+    });
+  }
 
   @override
   Widget build(BuildContext ctx) {
@@ -18,9 +39,7 @@ class _App extends State<App> {
           title: Text('Image Gallery'),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() => _images.add(Text('images')));
-          },
+          onPressed: getImage,
           child: Icon(Icons.add),
         ),
         body: Column(
@@ -43,11 +62,10 @@ class _App extends State<App> {
               flex: 1,
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: _images,
-              ),
-              flex: 7,
+              child: _images.length == 0
+                  ? const Text('Nothing as well')
+                  : ImageWidget(_images),
+              flex: 8,
             ),
           ],
         ),
