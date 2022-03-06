@@ -42,7 +42,14 @@ class _App extends State<App> {
           onPressed: getImage,
           child: Icon(Icons.add),
         ),
-        body: ImageWidget(_images),
+        body: _images.length == 0
+            ? Center(
+                child: Text(
+                  'Nothing to show',
+                  style: TextStyle(fontSize: 35),
+                ),
+              )
+            : ImageWidget(_images),
       ),
     );
   }
